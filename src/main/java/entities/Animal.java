@@ -19,15 +19,23 @@ public class Animal implements Serializable {
     @Column(unique = true)
     private String edad;
 
-    @Column(nullable = false)
     private String descripcion;
 
-    public Animal(Integer id, String nombre, String especie, String edad, String descripcion) {
+    private boolean recienAbandonado;
+    private boolean proximamenteAcogido;
+
+    private Integer diasRefugio;
+
+
+    public Animal(Integer id, String nombre, String especie, String edad, String descripcion, boolean recienAbandonado, boolean proximamenteAcogido, Integer diasRefugio) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
         this.edad = edad;
         this.descripcion = descripcion;
+        this.recienAbandonado = false;
+        this.proximamenteAcogido = false;
+        this.diasRefugio = 0;
     }
 
     public Integer getId() {
@@ -68,5 +76,25 @@ public class Animal implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public boolean isRecienAbandonado() {
+        return recienAbandonado;
+    }
+
+    public void setRecienAbandonado(boolean recienAbandonado) {
+        this.recienAbandonado = recienAbandonado;
+    }
+
+    public boolean isProximamenteAcogido() {
+        return proximamenteAcogido;
+    }
+
+    public void setProximamenteAcogido(boolean proximamenteAcogido) {
+        this.proximamenteAcogido = proximamenteAcogido;
+    }
+
+    public Integer getDiasRefugio() {
+        return diasRefugio;
     }
 }
