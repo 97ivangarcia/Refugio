@@ -1,100 +1,62 @@
 package entities;
 
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Animales") //cambiar el nombre de la tabla
+@Table(name = "Animales")
 public class Animal implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column
     private String nombre;
 
+    @Column
     private String especie;
 
-    @Column(unique = true)
-    private String edad;
+    @Column
+    private Integer edad;
 
+    @Column
     private String descripcion;
 
-    private boolean recienAbandonado;
-    private boolean proximamenteAcogido;
+    @Column
+    private Boolean recienAbandonado;
 
+    @Column
+    private Boolean proximamenteAcogido;
+
+    @Column
     private Integer diasRefugio;
 
+    // Relación inversa con Persona
+    @OneToOne(mappedBy = "animalAdoptado")
+    private Persona adoptante;
 
-    public Animal(Integer id, String nombre, String especie, String edad, String descripcion, boolean recienAbandonado, boolean proximamenteAcogido, Integer diasRefugio) {
+    public Animal() {}
+
+    public Animal(Integer id, String nombre, String especie, Integer edad, String descripcion,
+                  Boolean recienAbandonado, Boolean proximamenteAcogido, Integer diasRefugio) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
         this.edad = edad;
         this.descripcion = descripcion;
-        this.recienAbandonado = false;
-        this.proximamenteAcogido = false;
-        this.diasRefugio = 0;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEspecie() {
-        return especie;
-    }
-
-    public void setEspecie(String especie) {
-        this.especie = especie;
-    }
-
-    public String getEdad() {
-        return edad;
-    }
-
-    public void setEdad(String edad) {
-        this.edad = edad;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public boolean isRecienAbandonado() {
-        return recienAbandonado;
-    }
-
-    public void setRecienAbandonado(boolean recienAbandonado) {
         this.recienAbandonado = recienAbandonado;
-    }
-
-    public boolean isProximamenteAcogido() {
-        return proximamenteAcogido;
-    }
-
-    public void setProximamenteAcogido(boolean proximamenteAcogido) {
         this.proximamenteAcogido = proximamenteAcogido;
+        this.diasRefugio = diasRefugio;
     }
 
-    public Integer getDiasRefugio() {
-        return diasRefugio;
+    // Getters y setters...
+
+    public Persona getAdoptante() {
+        return adoptante;
+    }
+
+    public void setAdoptante(Persona adoptante) {
+        this.adoptante = adoptante;
     }
 }

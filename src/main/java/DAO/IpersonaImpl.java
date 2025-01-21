@@ -1,51 +1,77 @@
 package DAO;
 
 import entities.Persona;
+import Util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
 public class IpersonaImpl implements Ipersona {
-    /**
-     * @return
-     */
+
     @Override
     public List<Persona> findAll() {
-        return List.of();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Persona", Persona.class).list();
+        }
     }
 
-    /**
-     * @param id
-     * @return
-     */
     @Override
     public Persona findById(Integer id) {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Persona.class, id);
+        }
     }
 
-    /**
-     * @param persona
-     * @return
-     */
     @Override
     public Persona create(Persona persona) {
-        return null;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.persist(persona);
+            transaction.commit();
+            return persona;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw e;
+        }
     }
 
-    /**
-     * @param persona
-     * @return
-     */
     @Override
     public Persona update(Persona persona) {
-        return null;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.merge(persona);
+            transaction.commit();
+            return persona;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw e;
+        }
     }
 
-    /**
-     * @param id
-     * @return
-     */
     @Override
     public boolean deleteById(Integer id) {
-        return false;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            Persona persona = session.get(Persona.class, id);
+            if (persona != null) {
+                session.remove(persona);
+                transaction.commit();
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw e;
+        }
     }
 }

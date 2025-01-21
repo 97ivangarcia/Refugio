@@ -23,12 +23,15 @@ class PersonaTest {
         Persona persona = new Persona(null, "Ivan", 28, "Sevilla");
         Persona persona2 = new Persona(null, "Paco", 29, "Sevilla");
         Persona persona3 = new Persona(null, "Luis", 30, "Sevilla");
+        Persona persona4 = new Persona(null, "Maria", 30, "Sevilla");
+
 
         session.beginTransaction();
 
         session.persist(persona);
         session.persist(persona2);
         session.persist(persona3);
+        session.persist(persona4);
 
         session.getTransaction().commit();
 
