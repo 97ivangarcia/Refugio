@@ -15,20 +15,20 @@ public class Main {
         try {
             //1. Establecer la conexión
 
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/HibernateAnimales", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hibernateanimales", "root", "");
             System.out.println("Conexión establecida");
 
             //2. Crear una sentencia SQL
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM personilla");
+            rs = stmt.executeQuery("SELECT * FROM Personas");
 
             //3. Recorrer el ResultSet
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
-                String email = rs.getString("email");
-                float salario = rs.getFloat("salario");
-                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Email: " + email + ", Salario: " + salario);
+                int edad = rs.getInt("edad");
+                String ciudad = rs.getString("ciudad");
+                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Edad: " + edad + ", Ciudad: " + ciudad);
 
             }
 

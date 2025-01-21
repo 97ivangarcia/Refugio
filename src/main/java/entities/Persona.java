@@ -11,13 +11,13 @@ public class Persona implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column
     private String nombre;
 
-    @Column(unique = true)
+    @Column
     private Integer edad;
 
-    @Column(nullable = false)
+    @Column
     private String ciudad;
 
     public Persona(Integer id, String nombre, Integer edad, String ciudad) {

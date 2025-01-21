@@ -2,7 +2,7 @@
 
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernateanimales</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
@@ -13,6 +13,7 @@
         <!-- Clases que se van a mapear -->
 
         <mapping class="entities.Persona"></mapping>
+        <mapping class="entities.Animal"></mapping>
 
     </session-factory>
 </hibernate-configuration>
