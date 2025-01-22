@@ -36,8 +36,10 @@ public class Animal implements Serializable {
     @OneToOne(mappedBy = "animalAdoptado")
     private Persona adoptante;
 
+    // Constructor vacío
     public Animal() {}
 
+    // Constructor con parámetros
     public Animal(Integer id, String nombre, String especie, Integer edad, String descripcion,
                   Boolean recienAbandonado, Boolean proximamenteAcogido, Integer diasRefugio) {
         this.id = id;
@@ -50,7 +52,70 @@ public class Animal implements Serializable {
         this.diasRefugio = diasRefugio;
     }
 
-    // Getters y setters...
+    // Getters y Setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Boolean getRecienAbandonado() {
+        return recienAbandonado;
+    }
+
+    public void setRecienAbandonado(Boolean recienAbandonado) {
+        this.recienAbandonado = recienAbandonado;
+    }
+
+    public Boolean getProximamenteAcogido() {
+        return proximamenteAcogido;
+    }
+
+    public void setProximamenteAcogido(Boolean proximamenteAcogido) {
+        this.proximamenteAcogido = proximamenteAcogido;
+    }
+
+    public Integer getDiasRefugio() {
+        return diasRefugio;
+    }
+
+    public void setDiasRefugio(Integer diasRefugio) {
+        this.diasRefugio = diasRefugio;
+    }
 
     public Persona getAdoptante() {
         return adoptante;

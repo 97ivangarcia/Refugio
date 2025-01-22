@@ -1,9 +1,11 @@
 package DAO;
 
-import entities.Persona;
+import DAO.Ipersona;
 import Util.HibernateUtil;
+import entities.Persona;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 import java.util.List;
 
@@ -28,14 +30,15 @@ public class IpersonaImpl implements Ipersona {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.persist(persona);
+            session.save(persona);
             transaction.commit();
             return persona;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw e;
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -44,14 +47,15 @@ public class IpersonaImpl implements Ipersona {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.merge(persona);
+            session.update(persona);
             transaction.commit();
             return persona;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw e;
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -62,7 +66,7 @@ public class IpersonaImpl implements Ipersona {
             transaction = session.beginTransaction();
             Persona persona = session.get(Persona.class, id);
             if (persona != null) {
-                session.remove(persona);
+                session.delete(persona);
                 transaction.commit();
                 return true;
             }
@@ -71,7 +75,8 @@ public class IpersonaImpl implements Ipersona {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw e;
+            e.printStackTrace();
+            return false;
         }
     }
 }
