@@ -4,7 +4,6 @@ import Util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
-import DAO.IanimalImpl;
 
 
 class AnimalTest {
@@ -20,9 +19,9 @@ class AnimalTest {
         session.getTransaction().commit();
 
         // Insertar nuevas filas
-        Persona persona = new Persona(null, "Ivan", 28, "Sevilla");
-        Animal animal = new Animal(null, "Perro", "Labrador", 6, "Ganó 50.000€ en el casino y se fué para siempre", true, true, 10);
-        Animal animal2 = new Animal(null, "Gato", "Egipcio", 8, "Lo echaron de casa por calvo", false, true, 48);
+        Animal animal = new Animal(null, "Nevado", "Caniche", 6, "Ganó 50.000€ en el casino y se fué para siempre", true, true, 10);
+        Animal animal2 = new Animal(null, "Berengario", "Gato", 8, "Lo echaron de casa por borracho", false, true, 48);
+        Animal animal3 = new Animal(null, "Paco", "Caballo", 6, "Se metio en las drogas y huyó de casa", true, true, 10);
 
         session.beginTransaction();
 

@@ -21,12 +21,13 @@ public class Main {
             System.out.println("1. Registrar nuevo animal");
             System.out.println("2. Buscar animales por especie");
             System.out.println("3. Actualizar estado del animal");
-            System.out.println("4. Registrar datos de la familia que lo acoge");
+            System.out.println("4. Registrar acogida de un animal");
             System.out.println("5. Mostrar todos los animales");
-            System.out.println("6. Mostrar todas las familias");
-            System.out.println("7. Borrar un animal por ID");
-            System.out.println("8. Borrar una familia por ID");
-            System.out.println("9. Salir");
+            System.out.println("6. Mostrar todas las personas");
+            System.out.println("7. Borrar un animal del refugio por ID");
+            System.out.println("8. Borrar una persona por ID");
+            System.out.println("9. Mostrar mascotas con sus personas de acogida");
+            System.out.println("10. Salir");
             System.out.print("Elige una opción: ");
             opcion = scanner.nextInt();
             scanner.nextLine(); // Limpiar buffer
@@ -57,8 +58,12 @@ public class Main {
                     borrarFamiliaPorId(personaDAO, scanner);
                     break;
                 case 9:
+                    mostrarMascotasConFamilia(animalDAO, personaDAO);
+                    break;
+                case 10:
                     System.out.println("Saliendo...");
                     break;
+
                 default:
                     System.out.println("Opción no válida");
             }
@@ -145,7 +150,7 @@ public class Main {
             return;
         }
 
-        System.out.print("Ingrese el nombre de la familia: ");
+        System.out.print("Ingrese el nombre de la persona: ");
         String nombre = scanner.nextLine();
 
         System.out.print("Ingrese la edad del representante: ");
@@ -157,7 +162,7 @@ public class Main {
 
         Persona persona = new Persona(null, nombre, edad, ciudad, animal);
         personaDAO.create(persona);
-        System.out.println("Familia registrada correctamente.");
+        System.out.println("Persona registrada correctamente.");
     }
 
     private static void mostrarTodosLosAnimales(IanimalImpl animalDAO) {
@@ -168,27 +173,64 @@ public class Main {
 
     private static void mostrarTodasLasFamilias(IpersonaImpl personaDAO) {
         List<Persona> personas = personaDAO.findAll();
-        System.out.println("Lista de familias:");
+        System.out.println("Lista de personas:");
         personas.forEach(p -> System.out.println("ID: " + p.getId() + ", Nombre: " + p.getNombre()));
     }
 
     private static void borrarAnimalPorId(IanimalImpl animalDAO, Scanner scanner) {
         System.out.print("Ingrese el ID del animal a borrar: ");
         int id = scanner.nextInt();
-        if (animalDAO.deleteById(id)) {
-            System.out.println("Animal eliminado correctamente.");
+
+        // Intentar obtener el animal antes de borrarlo
+        Animal animal = animalDAO.findById(id);
+        if (animal != null) {
+            if (animalDAO.deleteById(id)) {
+                System.out.println("Animal '" + animal.getNombre() + "' eliminado correctamente.");
+            } else {
+                System.out.println("Error al eliminar el animal.");
+            }
         } else {
             System.out.println("Animal no encontrado.");
         }
     }
 
+
     private static void borrarFamiliaPorId(IpersonaImpl personaDAO, Scanner scanner) {
         System.out.print("Ingrese el ID de la familia a borrar: ");
         int id = scanner.nextInt();
-        if (personaDAO.deleteById(id)) {
-            System.out.println("Familia eliminada correctamente.");
+
+        // Intentar obtener la familia antes de borrarla
+        Persona familia = personaDAO.findById(id); // Supongamos que `findById` devuelve la familia o null
+        if (familia != null) {
+            if (personaDAO.deleteById(id)) {
+                System.out.println("Persona '" + familia.getNombre() + "' eliminada correctamente.");
+            } else {
+                System.out.println("Error al eliminar la persona.");
+            }
         } else {
-            System.out.println("Familia no encontrada.");
+            System.out.println("Persona no encontrada.");
         }
     }
+
+    private static void mostrarMascotasConFamilia(IanimalImpl animalDAO, IpersonaImpl personaDAO) {
+        List<Animal> animales = animalDAO.findAll();
+        if (animales.isEmpty()) {
+            System.out.println("No hay animales registrados.");
+            return;
+        }
+
+        System.out.println("Lista de mascotas con sus personas de acogida:");
+        for (Animal animal : animales) {
+            Persona familia = animal.getAdoptante();
+            if (familia != null) {
+                System.out.println("Animal: " + animal.getNombre() + " (ID: " + animal.getId() + "), Especie: " + animal.getEspecie()
+                        + " - Adoptado por: " + familia.getNombre() + " (ID: " + familia.getId() + ")");
+            } else {
+                System.out.println("Animal: " + animal.getNombre() + " (ID: " + animal.getId() + "), Especie: " + animal.getEspecie()
+                        + " - Sin familia de acogida.");
+            }
+        }
+    }
+
 }
+
