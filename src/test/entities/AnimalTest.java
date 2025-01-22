@@ -27,6 +27,7 @@ class AnimalTest {
 
         session.persist(animal);
         session.persist(animal2);
+        session.persist(animal3);
 
         session.getTransaction().commit();
 
